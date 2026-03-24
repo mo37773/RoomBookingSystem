@@ -35,12 +35,14 @@ public class RoomBooking {
         this.bookingId = bookingId;
     }
 
-    public int getRoomId() {
-        return room;
+    public int getRoomNo() {
+        //hopefully this will just access the getter straight from dhruva room class
+        return room.getRoomNumber();
     }
 
-    public void setRoomId(Room room) {
-        this.room = room;
+    public void setRoomNo(Room room) {
+        //same as above hopefully it will access the room class and set the room no there 
+        this.room.setRoomNumber() = room;
     }
 
 

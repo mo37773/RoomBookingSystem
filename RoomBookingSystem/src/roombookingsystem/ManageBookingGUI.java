@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -89,6 +90,7 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         editBtn.setText("EDIT");
 
         cancelBtn.setText("CANCEL");
+        cancelBtn.addActionListener(this::cancelBtnActionPerformed);
 
         mainBtn.setText("MAIN PAGE");
         mainBtn.addActionListener(this::mainBtnActionPerformed);
@@ -206,7 +208,28 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                 startTimeTf.setVisible(true);
                 endTimeLbl.setVisible(true);
                 endTimeTf.setVisible(true);
-                
+                boolean bookingFound = false;
+
+                for (int i = 0; i < bookingList.size(); i++) {
+                    if (bookingList.get(i).getBookingId() == searchInput) {
+                        int roomNo = bookingList.get(i).getRoomNo();
+                        LocalTime startTime = bookingList.get(i).getStartTime();
+                        LocalTime endTime = bookingList.get(i).getEndTime();
+
+                        roomNoTf.setText(Integer.toString(roomNo));
+                        startTimeTf.setText(startTime.toString());
+                        endTimeTf.setText(endTime.toString());
+                        //if we find the booking id we can break out of the loop
+                        bookingFound = true;
+                        break;
+
+                    }
+                }
+                //if not found display error msg
+                if (!bookingFound) {
+                    JOptionPane.showMessageDialog(null, "No booking with that ID found!");
+
+                }
             } //error handle if user enters anything but an integer to booking id 
             catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "You must enter an integer for the booking ID!");
@@ -214,6 +237,33 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        // TODO add your handling code here:
+        //error handle if list is empty
+        if (bookingList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "There are no existing bookings at the minute!!");
+
+        } else {
+            int searchInput = Integer.parseInt(searchTf.getText());
+            boolean bookingFound = false;
+            for (int i = 0; i < bookingList.size(); i++) {
+                if (bookingList.get(i).getBookingId() == searchInput) {
+                    bookingList.remove(i);
+                    JOptionPane.showMessageDialog(null, "Booking with booking ID: " + searchInput + " has been removed!");
+                    bookingFound = true;
+                    break;
+                }
+
+            }
+            //if not found display error msg
+
+            if (!bookingFound) {
+                JOptionPane.showMessageDialog(null, "No booking with that ID found!");
+
+            }
+        }
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     /**
      * @param args the command line arguments
