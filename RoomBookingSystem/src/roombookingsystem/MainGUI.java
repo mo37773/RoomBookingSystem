@@ -9,7 +9,7 @@ package roombookingsystem;
  * @author marti
  */
 public class MainGUI extends javax.swing.JFrame {
-    
+    SearchGUI mySearchGUI = new SearchGUI();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainGUI.class.getName());
 
     /**
@@ -37,6 +37,7 @@ public class MainGUI extends javax.swing.JFrame {
         titleLbl.setText("ROOM BOOKING SYSTEM");
 
         jButton1.setText("SEARCH ANY AVAILABLE ROOMS");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("MANAGE BOOKING");
 
@@ -69,6 +70,11 @@ public class MainGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        mySearchGUI.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

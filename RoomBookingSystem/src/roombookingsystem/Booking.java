@@ -1,6 +1,7 @@
 package roombookingsystem;
 
 public class Booking {
+
     private int bookingId;
     private String studentName;
     private String studentID;
@@ -11,7 +12,7 @@ public class Booking {
     private String status;
 
     public Booking(int bookingId, String studentName, String studentID,
-                   int roomId, String date, String startTime, String endTime, String status) {
+            int roomId, String date, String startTime, String endTime, String status) {
         this.bookingId = bookingId;
         this.studentName = studentName;
         this.studentID = studentID;
@@ -22,13 +23,39 @@ public class Booking {
         this.status = status;
     }
 
-    public int getBookingId() { return bookingId; }
-    public String getStudentName() { return studentName; }
-    public String getStudentID() { return studentID; }
-    public int getRoomId() { return roomId; }
-    public String getDate() { return date; }
-    public String getStartTime() { return startTime; }
-    public String getEndTime() { return endTime; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
