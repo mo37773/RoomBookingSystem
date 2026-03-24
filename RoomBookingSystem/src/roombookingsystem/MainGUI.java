@@ -32,52 +32,75 @@ public class MainGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         titleLbl = new javax.swing.JLabel();
-        searchBtn = new javax.swing.JButton();
         manageBtn = new javax.swing.JButton();
+        searchBtn = new javax.swing.JButton();
+        exitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        titleLbl.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 18)); // NOI18N
+        titleLbl.setForeground(new java.awt.Color(2, 48, 71));
         titleLbl.setText("ROOM BOOKING SYSTEM");
 
-        searchBtn.setText("SEARCH ANY AVAILABLE ROOMS");
-        searchBtn.addActionListener(this::searchBtnActionPerformed);
-
+        manageBtn.setBackground(new java.awt.Color(0, 119, 182));
+        manageBtn.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
+        manageBtn.setForeground(new java.awt.Color(234, 244, 244));
         manageBtn.setText("MANAGE BOOKING");
         manageBtn.addActionListener(this::manageBtnActionPerformed);
+
+        searchBtn.setBackground(new java.awt.Color(0, 119, 182));
+        searchBtn.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
+        searchBtn.setForeground(new java.awt.Color(234, 244, 244));
+        searchBtn.setText("SEARCH ROOMS");
+        searchBtn.addActionListener(this::searchBtnjButton1ActionPerformed);
+
+        exitBtn.setBackground(new java.awt.Color(0, 119, 182));
+        exitBtn.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
+        exitBtn.setForeground(new java.awt.Color(234, 244, 244));
+        exitBtn.setText("EXIT");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(searchBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(manageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(manageBtn)
+                            .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(81, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchBtn)
-                    .addComponent(manageBtn))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(manageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        mySearchGUI.setVisible(true);
-    }
+    private void searchBtnjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnjButton1ActionPerformed
+        // TODO add your handling code here:
+             mySearchGUI.setVisible(true);
+    }//GEN-LAST:event_searchBtnjButton1ActionPerformed
+
 
     private void manageBtnActionPerformed(java.awt.event.ActionEvent evt) {
         new ManageBookingGUI().setVisible(true);
@@ -110,6 +133,7 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton exitBtn;
     private javax.swing.JButton manageBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JLabel titleLbl;
