@@ -8,14 +8,14 @@ package roombookingsystem;
  *
  * @author marti
  */
-public class CancelGUI extends javax.swing.JFrame {
+public class ManageBookingGUI extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CancelGUI.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ManageBookingGUI.class.getName());
 
     /**
-     * Creates new form CancelGUI
+     * Creates new form ManageBookingGUI
      */
-    public CancelGUI() {
+    public ManageBookingGUI() {
         initComponents();
     }
 
@@ -66,7 +66,7 @@ public class CancelGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CancelGUI().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ManageBookingGUI().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
