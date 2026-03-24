@@ -42,7 +42,7 @@ public class RoomBooking {
 
     public void setRoomNo(Room room) {
         //same as above hopefully it will access the room class and set the room no there 
-        this.room.setRoomNumber() = room;
+        this.room = room;
     }
 
 

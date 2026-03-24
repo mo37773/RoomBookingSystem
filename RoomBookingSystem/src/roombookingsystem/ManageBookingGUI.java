@@ -6,8 +6,10 @@ package roombookingsystem;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -45,6 +47,7 @@ public class ManageBookingGUI extends javax.swing.JFrame {
             for (RoomBooking rb : loadedBList) {
                 bookingList.add(rb);
             }
+            oStream.close();
             System.out.println("File loaded successfully...");
         } catch (IOException e) {
             System.out.println(e);
@@ -70,7 +73,6 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         editBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
         mainBtn = new javax.swing.JButton();
-        confirmEditBtn = new javax.swing.JButton();
         roomNoLbl = new javax.swing.JLabel();
         startTimeLbl = new javax.swing.JLabel();
         endTimeLbl = new javax.swing.JLabel();
@@ -88,14 +90,13 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         searchBtn.addActionListener(this::searchBtnActionPerformed);
 
         editBtn.setText("EDIT");
+        editBtn.addActionListener(this::editBtnActionPerformed);
 
         cancelBtn.setText("CANCEL");
         cancelBtn.addActionListener(this::cancelBtnActionPerformed);
 
         mainBtn.setText("MAIN PAGE");
         mainBtn.addActionListener(this::mainBtnActionPerformed);
-
-        confirmEditBtn.setText("CONFIRM EDIT");
 
         roomNoLbl.setText("Room No:");
 
@@ -110,27 +111,22 @@ public class ManageBookingGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(confirmEditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(searchLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 22, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(roomNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(searchLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 22, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roomNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(mainBtn)
-                                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(14, 14, 14))))
+                            .addComponent(mainBtn)
+                            .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(14, 14, 14))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -177,9 +173,7 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                     .addComponent(editBtn)
                     .addComponent(cancelBtn)
                     .addComponent(mainBtn))
-                .addGap(18, 18, 18)
-                .addComponent(confirmEditBtn)
-                .addGap(23, 23, 23))
+                .addGap(64, 64, 64))
         );
 
         pack();
@@ -252,6 +246,18 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                     bookingList.remove(i);
                     JOptionPane.showMessageDialog(null, "Booking with booking ID: " + searchInput + " has been removed!");
                     bookingFound = true;
+                    //we will save to the file once the booking has been cancelled for concurrency
+                    try {
+                        File outFile = new File("output.dat");
+                        FileOutputStream fStream = new FileOutputStream(outFile);
+                        ObjectOutputStream oStream = new ObjectOutputStream(fStream);
+                        oStream.writeObject(bookingList);
+                        oStream.close();
+
+                    } catch (IOException io) {
+                        System.out.println(io);
+                    }
+
                     break;
                 }
 
@@ -264,6 +270,21 @@ public class ManageBookingGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        // TODO add your handling code here:
+        //we will save to the file once the booking has been editted for concurrency
+        try {
+            File outFile = new File("output.dat");
+            FileOutputStream fStream = new FileOutputStream(outFile);
+            ObjectOutputStream oStream = new ObjectOutputStream(fStream);
+            oStream.writeObject(bookingList);
+            oStream.close();
+
+        } catch (IOException io) {
+            System.out.println(io);
+        }
+    }//GEN-LAST:event_editBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,7 +313,6 @@ public class ManageBookingGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JButton confirmEditBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JLabel endTimeLbl;
     private javax.swing.JTextField endTimeTf;
