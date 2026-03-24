@@ -15,6 +15,8 @@ public class RoomBookingSystem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        MainGUI myGUI = new MainGUI();
+        myGUI.setVisible(true);
     }
     
 }
