@@ -4,6 +4,7 @@
  */
 package roombookingsystem;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,6 +30,8 @@ public class ManageBookingGUI extends javax.swing.JFrame {
 
     public ManageBookingGUI() {
         initComponents();
+        this.getContentPane().setBackground(Color.decode("#EAF4F4"));
+
         //making these labels and text fields not visible, when you click search they will appear
         roomNoLbl.setVisible(false);
         roomNoTf.setVisible(false);

@@ -4,6 +4,8 @@
  */
 package roombookingsystem;
 
+import java.awt.Color;
+
 /**
  *
  * @author dhruv
@@ -20,6 +22,8 @@ public class SearchGUI extends javax.swing.JFrame {
      */
     public SearchGUI() {
         initComponents();
+        this.getContentPane().setBackground(Color.decode("#EAF4F4"));
+        
         bookBtn.setEnabled(false);
         messageLbl.setText("");
         loadSampleData();

@@ -4,6 +4,8 @@
  */
 package roombookingsystem;
 
+import java.awt.Color;
+
 /**
  *
  * @author marti
@@ -17,6 +19,7 @@ public class MainGUI extends javax.swing.JFrame {
      */
     public MainGUI() {
         initComponents();
+        this.getContentPane().setBackground(Color.decode("#EAF4F4"));
     }
 
     /**
