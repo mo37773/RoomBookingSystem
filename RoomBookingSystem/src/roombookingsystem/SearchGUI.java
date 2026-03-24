@@ -67,14 +67,26 @@ public class SearchGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        titleLbl.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
+        titleLbl.setForeground(new java.awt.Color(2, 48, 71));
         titleLbl.setText("Search and View Available Rooms");
 
+        searchPanel.setBackground(new java.awt.Color(0, 180, 216));
+
+        dateLbl.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 14)); // NOI18N
+        dateLbl.setForeground(new java.awt.Color(234, 244, 244));
         dateLbl.setText("Date:");
 
+        startTimeLbl.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 14)); // NOI18N
+        startTimeLbl.setForeground(new java.awt.Color(234, 244, 244));
         startTimeLbl.setText("Start Time:");
 
+        endTimeLbl.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 14)); // NOI18N
+        endTimeLbl.setForeground(new java.awt.Color(234, 244, 244));
         endTimeLbl.setText("End Time:");
 
+        capacityLbl.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 14)); // NOI18N
+        capacityLbl.setForeground(new java.awt.Color(234, 244, 244));
         capacityLbl.setText("Capacity:");
 
         dateTF.addActionListener(new java.awt.event.ActionListener() {
@@ -88,25 +100,31 @@ public class SearchGUI extends javax.swing.JFrame {
         searchPanelLayout.setHorizontalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addComponent(capacityLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(capacityTF))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                        .addComponent(endTimeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(endTimeTF))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                        .addComponent(startTimeLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(startTimeTF))
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addComponent(dateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(dateTF, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(222, Short.MAX_VALUE))
+                        .addGap(24, 24, 24)
+                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(searchPanelLayout.createSequentialGroup()
+                                .addComponent(endTimeLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(endTimeTF))
+                            .addGroup(searchPanelLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(capacityLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(capacityTF))))
+                    .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(searchPanelLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(startTimeLbl)
+                            .addGap(18, 18, 18)
+                            .addComponent(startTimeTF, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, searchPanelLayout.createSequentialGroup()
+                            .addGap(61, 61, 61)
+                            .addComponent(dateLbl)
+                            .addGap(18, 18, 18)
+                            .addComponent(dateTF, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         searchPanelLayout.setVerticalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,10 +143,12 @@ public class SearchGUI extends javax.swing.JFrame {
                     .addComponent(endTimeTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(capacityLbl)
-                    .addComponent(capacityTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(capacityTF, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(capacityLbl))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
+
+        viewPanel.setBackground(new java.awt.Color(0, 180, 216));
 
         viewTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,6 +171,9 @@ public class SearchGUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(viewTable);
 
+        bookBtn.setBackground(new java.awt.Color(0, 119, 182));
+        bookBtn.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
+        bookBtn.setForeground(new java.awt.Color(234, 244, 244));
         bookBtn.setText("Book Selected Room");
         bookBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +211,9 @@ public class SearchGUI extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
+        searchBtn.setBackground(new java.awt.Color(0, 119, 182));
+        searchBtn.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
+        searchBtn.setForeground(new java.awt.Color(234, 244, 244));
         searchBtn.setText("Search");
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

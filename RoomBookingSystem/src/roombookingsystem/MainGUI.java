@@ -58,6 +58,7 @@ public class MainGUI extends javax.swing.JFrame {
         exitBtn.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
         exitBtn.setForeground(new java.awt.Color(234, 244, 244));
         exitBtn.setText("EXIT");
+        exitBtn.addActionListener(this::exitBtnActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,6 +101,11 @@ public class MainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
              mySearchGUI.setVisible(true);
     }//GEN-LAST:event_searchBtnjButton1ActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnActionPerformed
 
 
     private void manageBtnActionPerformed(java.awt.event.ActionEvent evt) {
