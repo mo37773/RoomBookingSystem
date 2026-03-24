@@ -4,19 +4,53 @@
  */
 package roombookingsystem;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author marti
  */
 public class ManageBookingGUI extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ManageBookingGUI.class.getName());
 
     /**
      * Creates new form ManageBookingGUI
      */
+    ArrayList<RoomBooking> bookingList = new ArrayList<>();
+
     public ManageBookingGUI() {
         initComponents();
+        //making these labels and text fields not visible, when you click search they will appear
+        roomNoLbl.setVisible(false);
+        roomNoTf.setVisible(false);
+        startTimeLbl.setVisible(false);
+        startTimeTf.setVisible(false);
+        endTimeLbl.setVisible(false);
+        endTimeTf.setVisible(false);
+        //loads array list that we have saved with bookings as soon as the gui is loaded
+
+        try {
+            File inFile = new File("output.dat");
+            FileInputStream fStream = new FileInputStream(inFile);
+            ObjectInputStream oStream = new ObjectInputStream(fStream);
+            //we type cast the o stream as a new array list and copy each item from that list to our array list that we will work on
+            ArrayList<RoomBooking> loadedBList = (ArrayList<RoomBooking>) oStream.readObject();
+            for (RoomBooking rb : loadedBList) {
+                bookingList.add(rb);
+            }
+            System.out.println("File loaded successfully...");
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex);
+
+        }
     }
 
     /**
@@ -28,21 +62,158 @@ public class ManageBookingGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        titleLbl = new javax.swing.JLabel();
+        searchTf = new javax.swing.JTextField();
+        searchLbl = new javax.swing.JLabel();
+        searchBtn = new javax.swing.JButton();
+        editBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        mainBtn = new javax.swing.JButton();
+        confirmEditBtn = new javax.swing.JButton();
+        roomNoLbl = new javax.swing.JLabel();
+        startTimeLbl = new javax.swing.JLabel();
+        endTimeLbl = new javax.swing.JLabel();
+        roomNoTf = new javax.swing.JTextField();
+        startTimeTf = new javax.swing.JTextField();
+        endTimeTf = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        titleLbl.setText("MANAGE BOOKING");
+
+        searchLbl.setText("Enter the booking ID:");
+
+        searchBtn.setText("SEARCH");
+        searchBtn.addActionListener(this::searchBtnActionPerformed);
+
+        editBtn.setText("EDIT");
+
+        cancelBtn.setText("CANCEL");
+
+        mainBtn.setText("MAIN PAGE");
+        mainBtn.addActionListener(this::mainBtnActionPerformed);
+
+        confirmEditBtn.setText("CONFIRM EDIT");
+
+        roomNoLbl.setText("Room No:");
+
+        startTimeLbl.setText("Start Time:");
+
+        endTimeLbl.setText("End Time:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(confirmEditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(searchLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 22, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(roomNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mainBtn)
+                                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(14, 14, 14))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(roomNoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(startTimeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(startTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(endTimeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(endTimeTf)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchLbl)
+                    .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(roomNoLbl)
+                    .addComponent(roomNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startTimeLbl)
+                    .addComponent(startTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(endTimeLbl)
+                    .addComponent(endTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editBtn)
+                    .addComponent(cancelBtn)
+                    .addComponent(mainBtn))
+                .addGap(18, 18, 18)
+                .addComponent(confirmEditBtn)
+                .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mainBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainBtnActionPerformed
+        // TODO add your handling code here:
+        //brings you back to main page
+        new MainGUI().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_mainBtnActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        // TODO add your handling code here:
+        //error handle if list is empty
+        if (bookingList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "There are no existing bookings at the minute!!");
+
+        } else {
+            try {
+                int searchInput = Integer.parseInt(searchTf.getText());
+                //will make these variables visible now and populate the text fields with the contents of each booking
+                roomNoLbl.setVisible(true);
+                roomNoTf.setVisible(true);
+                startTimeLbl.setVisible(true);
+                startTimeTf.setVisible(true);
+                endTimeLbl.setVisible(true);
+                endTimeTf.setVisible(true);
+                
+            } //error handle if user enters anything but an integer to booking id 
+            catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "You must enter an integer for the booking ID!");
+            }
+        }
+
+    }//GEN-LAST:event_searchBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +241,19 @@ public class ManageBookingGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton confirmEditBtn;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JLabel endTimeLbl;
+    private javax.swing.JTextField endTimeTf;
+    private javax.swing.JButton mainBtn;
+    private javax.swing.JLabel roomNoLbl;
+    private javax.swing.JTextField roomNoTf;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JLabel searchLbl;
+    private javax.swing.JTextField searchTf;
+    private javax.swing.JLabel startTimeLbl;
+    private javax.swing.JTextField startTimeTf;
+    private javax.swing.JLabel titleLbl;
     // End of variables declaration//GEN-END:variables
 }

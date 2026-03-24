@@ -14,16 +14,14 @@ import java.time.LocalTime;
 public class RoomBooking {
 
     private int bookingId;
-    private int roomId;
-    private int capacity;
+    private Room room;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDateTime createdAt;
 
-    public RoomBooking(int bookingId, int roomId, int capacity, LocalTime startTime, LocalTime endTime, LocalDateTime createdAt) {
+    public RoomBooking(int bookingId, Room room, LocalTime startTime, LocalTime endTime, LocalDateTime createdAt) {
         this.bookingId = bookingId;
-        this.roomId = roomId;
-        this.capacity = capacity;
+        this.room = room;
         this.startTime = startTime;
         this.endTime = endTime;
         this.createdAt = createdAt;
@@ -38,20 +36,13 @@ public class RoomBooking {
     }
 
     public int getRoomId() {
-        return roomId;
+        return room;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setRoomId(Room room) {
+        this.room = room;
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
