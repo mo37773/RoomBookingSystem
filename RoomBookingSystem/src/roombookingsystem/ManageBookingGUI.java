@@ -39,11 +39,8 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         startTimeTf.setVisible(false);
         endTimeLbl.setVisible(false);
         endTimeTf.setVisible(false);
-        statusLbl.setVisible(false);
-        statusTf.setVisible(false);
-        
-        //loads array list that we have saved with bookings as soon as the gui is loaded
 
+        //loads array list that we have saved with bookings as soon as the gui is loaded
         try {
             File inFile = new File("output.dat");
             FileInputStream fStream = new FileInputStream(inFile);
@@ -85,8 +82,6 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         roomNoTf = new javax.swing.JTextField();
         startTimeTf = new javax.swing.JTextField();
         endTimeTf = new javax.swing.JTextField();
-        statusLbl = new javax.swing.JLabel();
-        statusTf = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,12 +129,6 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         endTimeLbl.setForeground(new java.awt.Color(2, 48, 71));
         endTimeLbl.setText("End Time:");
 
-        statusLbl.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
-        statusLbl.setForeground(new java.awt.Color(2, 48, 71));
-        statusLbl.setText("Status: ");
-
-        statusTf.addActionListener(this::statusTfActionPerformed);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,10 +140,9 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(searchLbl)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(roomNoLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                                .addComponent(roomNoLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(startTimeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(endTimeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(statusLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(endTimeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,11 +150,13 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                                .addComponent(cancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(41, 41, 41)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(mainBtn))
@@ -175,8 +165,7 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(endTimeTf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                             .addComponent(startTimeTf)
-                            .addComponent(roomNoTf)
-                            .addComponent(statusTf))
+                            .addComponent(roomNoTf))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(215, 215, 215)
@@ -205,11 +194,7 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(endTimeLbl)
                     .addComponent(endTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statusLbl)
-                    .addComponent(statusTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mainBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,8 +228,6 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                 startTimeTf.setVisible(true);
                 endTimeLbl.setVisible(true);
                 endTimeTf.setVisible(true);
-                statusLbl.setVisible(true);
-                statusTf.setVisible(true);
                 boolean bookingFound = false;
 
                 for (int i = 0; i < bookingList.size(); i++) {
@@ -256,7 +239,9 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                         roomNoTf.setText(Integer.toString(roomNo));
                         startTimeTf.setText(startTime.toString());
                         endTimeTf.setText(endTime.toString());
+                        /*status should be kept on the room object, not booking
                         statusTf.setText(bookingList.get(i).getStatus());
+                         */
                         //if we find the booking id we can break out of the loop
                         bookingFound = true;
                         break;
@@ -287,9 +272,16 @@ public class ManageBookingGUI extends javax.swing.JFrame {
             boolean bookingFound = false;
             for (int i = 0; i < bookingList.size(); i++) {
                 if (bookingList.get(i).getBookingId() == searchInput) {
+                    //this will retrieve the room booking, retrieve the room object and set the status back to active before removal
+                    bookingList.get(i).getRoom().setStatus("Active");
                     bookingList.remove(i);
                     JOptionPane.showMessageDialog(null, "Booking with booking ID: " + searchInput + " has been removed!");
                     bookingFound = true;
+                    //clear text fields after cancel has been successful
+                    searchTf.setText("");
+                    roomNoTf.setText("");
+                    startTimeTf.setText("");
+                    endTimeTf.setText("");
                     //we will save to the file once the booking has been cancelled for concurrency
                     try {
                         File outFile = new File("output.dat");
@@ -334,19 +326,24 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                     int newRoomNo = Integer.parseInt(roomNoTf.getText());
                     LocalTime newStartTime = LocalTime.parse(startTimeTf.getText());
                     LocalTime newEndTime = LocalTime.parse(endTimeTf.getText());
-                    String newStatus = statusTf.getText();
 
                     // Update booking
                     Room newRoom = new Room(newRoomNo);
                     bookingList.get(i).setRoom(newRoom);
                     bookingList.get(i).setStartTime(newStartTime);
                     bookingList.get(i).setEndTime(newEndTime);
-                    bookingList.get(i).setStatus(newStatus);
 
+                    /*status should be kept on the room object, not booking
+                    bookingList.get(i).setStatus(newStatus);
+                     */
                     bookingFound = true;
 
                     JOptionPane.showMessageDialog(null, "Booking updated successfully!");
-
+                    //clear text fields after edit has been successful
+                    searchTf.setText("");
+                    roomNoTf.setText("");
+                    startTimeTf.setText("");
+                    endTimeTf.setText("");
                     // Save updated list to file
                     File outFile = new File("output.dat");
                     FileOutputStream fStream = new FileOutputStream(outFile);
@@ -368,10 +365,6 @@ public class ManageBookingGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Invalid time format! Use HH:MM (e.g., 14:30)");
         }
     }//GEN-LAST:event_editBtnActionPerformed
-
-    private void statusTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusTfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_statusTfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -411,8 +404,6 @@ public class ManageBookingGUI extends javax.swing.JFrame {
     private javax.swing.JTextField searchTf;
     private javax.swing.JLabel startTimeLbl;
     private javax.swing.JTextField startTimeTf;
-    private javax.swing.JLabel statusLbl;
-    private javax.swing.JTextField statusTf;
     private javax.swing.JLabel titleLbl;
     // End of variables declaration//GEN-END:variables
 }

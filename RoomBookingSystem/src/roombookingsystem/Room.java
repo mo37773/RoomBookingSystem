@@ -21,6 +21,7 @@ public class Room implements java.io.Serializable {
     public int getRoomId() {
         return roomId;
     }
+    
 
     public int getRoomNumber() {
         return roomNumber;

@@ -20,7 +20,6 @@ public class RoomBooking implements java.io.Serializable {
     private LocalTime endTime;
     private LocalDateTime createdAt;
     private LocalDate bookingDate;
-    private String status;
 
     public RoomBooking(int bookingId, Room room, LocalDate bookingDate,LocalTime startTime, LocalTime endTime, LocalDateTime createdAt) {
         this.bookingId = bookingId;
@@ -29,7 +28,6 @@ public class RoomBooking implements java.io.Serializable {
         this.startTime = startTime;
         this.endTime = endTime;
         this.createdAt = createdAt;
-        this.status = "Booked";
 }
 
     public int getBookingId() {
@@ -43,6 +41,10 @@ public class RoomBooking implements java.io.Serializable {
     public int getRoomNo() {
         //hopefully this will just access the getter straight from dhruva room class
         return room.getRoomNumber();
+    }
+    //this is to set the status back when we cancel the booking
+    public Room getRoom(){
+        return room;
     }
 
     public void setRoom(Room room) {
@@ -78,12 +80,6 @@ public class RoomBooking implements java.io.Serializable {
     public LocalDate getBookingDate() {
         return bookingDate;
     }
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 }

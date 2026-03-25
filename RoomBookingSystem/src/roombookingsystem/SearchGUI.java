@@ -29,7 +29,7 @@ public class SearchGUI extends javax.swing.JFrame {
      */
     public SearchGUI() {
         initComponents();
-        
+
         // Placeholder text
         dateTF.setText("YYYY-MM-DD");
         startTimeTF.setText("HH:MM");
@@ -41,14 +41,14 @@ public class SearchGUI extends javax.swing.JFrame {
         startTimeTF.setForeground(java.awt.Color.GRAY);
         endTimeTF.setForeground(java.awt.Color.GRAY);
         capacityTF.setForeground(java.awt.Color.GRAY);
-        
+
         addPlaceholder(dateTF, "YYYY-MM-DD");
         addPlaceholder(startTimeTF, "HH:MM");
         addPlaceholder(endTimeTF, "HH:MM");
         addPlaceholder(capacityTF, "Enter capacity");
-        
+
         this.getContentPane().setBackground(Color.decode("#EAF4F4"));
-        
+
         bookBtn.setEnabled(false);
         messageLbl.setText("");
         loadSampleData();
@@ -223,7 +223,7 @@ public class SearchGUI extends javax.swing.JFrame {
         });
 
         mainBtn.setBackground(new java.awt.Color(0, 119, 182));
-        mainBtn.setFont(new java.awt.Font("Gill Sans MT", 1, 16)); // NOI18N
+        mainBtn.setFont(new java.awt.Font("Gill Sans Nova Ultra Bold", 1, 16)); // NOI18N
         mainBtn.setForeground(new java.awt.Color(234, 244, 244));
         mainBtn.setText("Main Page");
         mainBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -250,7 +250,7 @@ public class SearchGUI extends javax.swing.JFrame {
                         .addGroup(viewPanelLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         viewPanelLayout.setVerticalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,11 +286,10 @@ public class SearchGUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(viewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(searchBtn)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -327,16 +326,16 @@ public class SearchGUI extends javax.swing.JFrame {
                     "Please select a room from the table.");
             return;
         }
-        
+
         String status = viewTable.getValueAt(selectedRow, 3).toString();
         if (status.equals("Booked")) {
             JOptionPane.showMessageDialog(this,
-                "This room is already booked!");
+                    "This room is already booked!");
             return;
         }
 
         int roomNumber = (int) viewTable.getValueAt(selectedRow, 1);
-        
+
         String date = dateTF.getText().trim();
         String startTime = startTimeTF.getText();
         String endTime = endTimeTF.getText();
@@ -393,7 +392,7 @@ public class SearchGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     "Room booked successfully!\nBooking ID: " + newId);
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Error booking room!");
             e.printStackTrace();
@@ -401,14 +400,14 @@ public class SearchGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bookBtnActionPerformed
 
-    
+
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
         String date = dateTF.getText().trim();
         String startTime = startTimeTF.getText().trim();
         String endTime = endTimeTF.getText().trim();
         String capacityText = capacityTF.getText().trim();
-        
+
         ArrayList<RoomBooking> bookingList = new ArrayList<>();
         try {
             File file = new File("output.dat");
@@ -523,15 +522,14 @@ public class SearchGUI extends javax.swing.JFrame {
         for (Room room : rooms) {
             if (room.getCapacity() >= capacity && room.getStatus().equals("Active")) {
                 boolean isBooked = false;
-                
+
                 for (RoomBooking b : bookingList) {
 
                     if (b.getRoomNo() == room.getRoomNumber()
-                        && b.getBookingDate().equals(java.time.LocalDate.parse(date))
-                        && b.getStatus().equals("Booked")) {
+                            && b.getBookingDate().equals(java.time.LocalDate.parse(date))) {
 
-                        if (!(b.getEndTime().toString().compareTo(startTime) <= 0 ||
-                              b.getStartTime().toString().compareTo(endTime) >= 0)) {
+                        if (!(b.getEndTime().toString().compareTo(startTime) <= 0
+                                || b.getStartTime().toString().compareTo(endTime) >= 0)) {
 
                             isBooked = true;
                             break;
@@ -639,26 +637,27 @@ public class SearchGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new SearchGUI().setVisible(true));
     }
-    
+
     private void addPlaceholder(javax.swing.JTextField field, String placeholder) {
 
-    field.addFocusListener(new java.awt.event.FocusAdapter() {
+        field.addFocusListener(new java.awt.event.FocusAdapter() {
 
-        public void focusGained(java.awt.event.FocusEvent evt) {
-            if (field.getText().equals(placeholder)) {
-                field.setText("");
-                field.setForeground(java.awt.Color.BLACK);
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(java.awt.Color.BLACK);
+                }
             }
-        }
 
-        public void focusLost(java.awt.event.FocusEvent evt) {
-            if (field.getText().isEmpty()) {
-                field.setText(placeholder);
-                field.setForeground(java.awt.Color.GRAY);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(java.awt.Color.GRAY);
+                }
             }
-        }
-    });
-}
+        });
+    }
+
     private void saveRoomsToFile() {
         try {
             File file = new File("rooms.dat");
@@ -669,20 +668,20 @@ public class SearchGUI extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    private void loadRoomsFromFile() {
-    try {
-        File file = new File("rooms.dat");
 
-        if (file.exists()) {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            rooms = (ArrayList<Room>) ois.readObject();
-            ois.close();
+    private void loadRoomsFromFile() {
+        try {
+            File file = new File("rooms.dat");
+
+            if (file.exists()) {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                rooms = (ArrayList<Room>) ois.readObject();
+                ois.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookBtn;
