@@ -6,26 +6,31 @@ package roombookingsystem;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.LocalDate;
 
 /**
  *
  * @author marti
  */
-public class RoomBooking {
+public class RoomBooking implements java.io.Serializable {
 
     private int bookingId;
     private Room room;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDateTime createdAt;
+    private LocalDate bookingDate;
+    private String status;
 
-    public RoomBooking(int bookingId, Room room, LocalTime startTime, LocalTime endTime, LocalDateTime createdAt) {
+    public RoomBooking(int bookingId, Room room, LocalDate bookingDate,LocalTime startTime, LocalTime endTime, LocalDateTime createdAt) {
         this.bookingId = bookingId;
         this.room = room;
+        this.bookingDate = bookingDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.createdAt = createdAt;
-    }
+        this.status = "Booked";
+}
 
     public int getBookingId() {
         return bookingId;
@@ -40,7 +45,7 @@ public class RoomBooking {
         return room.getRoomNumber();
     }
 
-    public void setRoomNo(Room room) {
+    public void setRoom(Room room) {
         //same as above hopefully it will access the room class and set the room no there 
         this.room = room;
     }
@@ -68,6 +73,17 @@ public class RoomBooking {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+    
+    public LocalDate getBookingDate() {
+        return bookingDate;
+    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
