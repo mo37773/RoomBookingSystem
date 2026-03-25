@@ -341,6 +341,24 @@ public class SearchGUI extends javax.swing.JFrame {
         String startTime = startTimeTF.getText();
         String endTime = endTimeTF.getText();
 
+        // Prevent booking for dates in the past.
+        java.time.LocalDate bookingDate;
+        try {
+            bookingDate = java.time.LocalDate.parse(date);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Date format. Use YYYY-MM-DD.",
+                    "Invalid Date", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (bookingDate.isBefore(java.time.LocalDate.now())) {
+            JOptionPane.showMessageDialog(this,
+                    "You cannot book a room for a past date.",
+                    "Past Date Not Allowed", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try {
             File file = new File("output.dat");
             ArrayList<RoomBooking> bookingList = new ArrayList<>();
@@ -359,7 +377,7 @@ public class SearchGUI extends javax.swing.JFrame {
             RoomBooking newBooking = new RoomBooking(
                     newId,
                     room,
-                    java.time.LocalDate.parse(date),
+                    bookingDate,
                     java.time.LocalTime.parse(startTime),
                     java.time.LocalTime.parse(endTime),
                     java.time.LocalDateTime.now()
