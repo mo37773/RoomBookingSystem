@@ -39,6 +39,9 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         startTimeTf.setVisible(false);
         endTimeLbl.setVisible(false);
         endTimeTf.setVisible(false);
+        statusLbl.setVisible(false);
+        statusTf.setVisible(false);
+        
         //loads array list that we have saved with bookings as soon as the gui is loaded
 
         try {
@@ -82,6 +85,8 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         roomNoTf = new javax.swing.JTextField();
         startTimeTf = new javax.swing.JTextField();
         endTimeTf = new javax.swing.JTextField();
+        statusLbl = new javax.swing.JLabel();
+        statusTf = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,47 +134,53 @@ public class ManageBookingGUI extends javax.swing.JFrame {
         endTimeLbl.setForeground(new java.awt.Color(2, 48, 71));
         endTimeLbl.setText("End Time:");
 
+        statusLbl.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
+        statusLbl.setForeground(new java.awt.Color(2, 48, 71));
+        statusLbl.setText("Status: ");
+
+        statusTf.addActionListener(this::statusTfActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(searchLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(startTimeLbl)
-                            .addComponent(roomNoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(endTimeLbl)
-                            .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchLbl)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(roomNoLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                                .addComponent(startTimeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(endTimeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(statusLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(mainBtn))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(25, 25, 25)
+                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mainBtn))
                         .addGap(38, 38, 38))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cancelBtn)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(roomNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(startTimeTf, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                                    .addComponent(endTimeTf))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(endTimeTf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                            .addComponent(startTimeTf)
+                            .addComponent(roomNoTf)
+                            .addComponent(statusTf))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(176, 176, 176)
-                .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(215, 215, 215)
+                .addComponent(titleLbl)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -180,20 +191,24 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchLbl)
-                    .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchBtn))
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(roomNoLbl)
                     .addComponent(roomNoTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(startTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(startTimeLbl))
-                .addGap(21, 21, 21)
+                    .addComponent(startTimeLbl)
+                    .addComponent(startTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(endTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endTimeLbl))
+                    .addComponent(endTimeLbl)
+                    .addComponent(endTimeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(statusLbl)
+                    .addComponent(statusTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,6 +243,8 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                 startTimeTf.setVisible(true);
                 endTimeLbl.setVisible(true);
                 endTimeTf.setVisible(true);
+                statusLbl.setVisible(true);
+                statusTf.setVisible(true);
                 boolean bookingFound = false;
 
                 for (int i = 0; i < bookingList.size(); i++) {
@@ -239,6 +256,7 @@ public class ManageBookingGUI extends javax.swing.JFrame {
                         roomNoTf.setText(Integer.toString(roomNo));
                         startTimeTf.setText(startTime.toString());
                         endTimeTf.setText(endTime.toString());
+                        statusTf.setText(bookingList.get(i).getStatus());
                         //if we find the booking id we can break out of the loop
                         bookingFound = true;
                         break;
@@ -299,18 +317,61 @@ public class ManageBookingGUI extends javax.swing.JFrame {
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // TODO add your handling code here:
-        //we will save to the file once the booking has been editted for concurrency
-        try {
-            File outFile = new File("output.dat");
-            FileOutputStream fStream = new FileOutputStream(outFile);
-            ObjectOutputStream oStream = new ObjectOutputStream(fStream);
-            oStream.writeObject(bookingList);
-            oStream.close();
+        //we will save to the file once the booking has been editted for concurrency                                        
+        if (bookingList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No bookings available!");
+            return;
+        }
 
-        } catch (IOException io) {
-            System.out.println(io);
+        try {
+            int searchInput = Integer.parseInt(searchTf.getText());
+            boolean bookingFound = false;
+
+            for (int i = 0; i < bookingList.size(); i++) {
+                if (bookingList.get(i).getBookingId() == searchInput) {
+
+                    // Get updated values from text fields
+                    int newRoomNo = Integer.parseInt(roomNoTf.getText());
+                    LocalTime newStartTime = LocalTime.parse(startTimeTf.getText());
+                    LocalTime newEndTime = LocalTime.parse(endTimeTf.getText());
+                    String newStatus = statusTf.getText();
+
+                    // Update booking
+                    Room newRoom = new Room(newRoomNo);
+                    bookingList.get(i).setRoom(newRoom);
+                    bookingList.get(i).setStartTime(newStartTime);
+                    bookingList.get(i).setEndTime(newEndTime);
+                    bookingList.get(i).setStatus(newStatus);
+
+                    bookingFound = true;
+
+                    JOptionPane.showMessageDialog(null, "Booking updated successfully!");
+
+                    // Save updated list to file
+                    File outFile = new File("output.dat");
+                    FileOutputStream fStream = new FileOutputStream(outFile);
+                    ObjectOutputStream oStream = new ObjectOutputStream(fStream);
+                    oStream.writeObject(bookingList);
+                    oStream.close();
+
+                    break;
+                }
+            }
+
+            if (!bookingFound) {
+                JOptionPane.showMessageDialog(null, "Booking not found!");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input! Check Room No or Booking ID.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Invalid time format! Use HH:MM (e.g., 14:30)");
         }
     }//GEN-LAST:event_editBtnActionPerformed
+
+    private void statusTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusTfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusTfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,6 +411,8 @@ public class ManageBookingGUI extends javax.swing.JFrame {
     private javax.swing.JTextField searchTf;
     private javax.swing.JLabel startTimeLbl;
     private javax.swing.JTextField startTimeTf;
+    private javax.swing.JLabel statusLbl;
+    private javax.swing.JTextField statusTf;
     private javax.swing.JLabel titleLbl;
     // End of variables declaration//GEN-END:variables
 }
