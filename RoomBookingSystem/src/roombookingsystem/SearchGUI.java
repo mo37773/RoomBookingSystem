@@ -5,6 +5,13 @@
 package roombookingsystem;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +29,24 @@ public class SearchGUI extends javax.swing.JFrame {
      */
     public SearchGUI() {
         initComponents();
+        
+        // Placeholder text
+        dateTF.setText("YYYY-MM-DD");
+        startTimeTF.setText("HH:MM");
+        endTimeTF.setText("HH:MM");
+        capacityTF.setText("Enter capacity");
+
+        // Light grey color (looks like placeholder)
+        dateTF.setForeground(java.awt.Color.GRAY);
+        startTimeTF.setForeground(java.awt.Color.GRAY);
+        endTimeTF.setForeground(java.awt.Color.GRAY);
+        capacityTF.setForeground(java.awt.Color.GRAY);
+        
+        addPlaceholder(dateTF, "YYYY-MM-DD");
+        addPlaceholder(startTimeTF, "HH:MM");
+        addPlaceholder(endTimeTF, "HH:MM");
+        addPlaceholder(capacityTF, "Enter capacity");
+        
         this.getContentPane().setBackground(Color.decode("#EAF4F4"));
         
         bookBtn.setEnabled(false);
@@ -30,13 +55,28 @@ public class SearchGUI extends javax.swing.JFrame {
     }
 
     private void loadSampleData() {
-        rooms.add(new Room(1, 101, 10, "Active"));
-        rooms.add(new Room(2, 102, 20, "Active"));
-        rooms.add(new Room(3, 103, 5, "Active"));
-        rooms.add(new Room(4, 104, 30, "Active"));
-        rooms.add(new Room(5, 105, 15, "Active"));
-        bookings.add(new Booking(1, "John", "S001", 1, "2026-04-01", "09:00", "11:00", "Active"));
-        bookings.add(new Booking(2, "Sarah", "S002", 3, "2026-04-01", "10:00", "12:00", "Active"));
+
+        try {
+            File file = new File("rooms.dat");
+
+            if (file.exists()) {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                rooms = (ArrayList<Room>) ois.readObject();
+                ois.close();
+            } else {
+                // Default rooms (only first time)
+                rooms.add(new Room(1, 101, 10, "Active"));
+                rooms.add(new Room(2, 102, 20, "Active"));
+                rooms.add(new Room(3, 103, 5, "Active"));
+                rooms.add(new Room(4, 104, 30, "Active"));
+                rooms.add(new Room(5, 105, 15, "Active"));
+
+                saveRoomsToFile(); // save initial data
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -283,23 +323,87 @@ public class SearchGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRow = viewTable.getSelectedRow();
         if (selectedRow == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Please select a room from the table.",
-                    "No Selection", javax.swing.JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Please select a room from the table.");
+            return;
+        }
+        
+        String status = viewTable.getValueAt(selectedRow, 3).toString();
+        if (status.equals("Booked")) {
+            JOptionPane.showMessageDialog(this,
+                "This room is already booked!");
             return;
         }
 
         int roomNumber = (int) viewTable.getValueAt(selectedRow, 1);
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Proceeding to book Room " + roomNumber);
+        
+        String date = dateTF.getText().trim();
+        String startTime = startTimeTF.getText();
+        String endTime = endTimeTF.getText();
+
+        try {
+            File file = new File("output.dat");
+            ArrayList<RoomBooking> bookingList = new ArrayList<>();
+
+            if (file.exists()) {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                bookingList = (ArrayList<RoomBooking>) ois.readObject();
+                ois.close();
+            }
+
+            // Generate new Booking ID
+            int newId = bookingList.size() + 1;
+
+            //Create new booking
+            Room room = new Room(roomNumber);
+            RoomBooking newBooking = new RoomBooking(
+                    newId,
+                    room,
+                    java.time.LocalDate.parse(date),
+                    java.time.LocalTime.parse(startTime),
+                    java.time.LocalTime.parse(endTime),
+                    java.time.LocalDateTime.now()
+            );
+
+            bookingList.add(newBooking);
+
+            //Save to file
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+            oos.writeObject(bookingList);
+            oos.close();
+
+            JOptionPane.showMessageDialog(this,
+                    "Room booked successfully!\nBooking ID: " + newId);
+
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error booking room!");
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_bookBtnActionPerformed
 
+    
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
         String date = dateTF.getText().trim();
         String startTime = startTimeTF.getText().trim();
         String endTime = endTimeTF.getText().trim();
         String capacityText = capacityTF.getText().trim();
+        
+        ArrayList<RoomBooking> bookingList = new ArrayList<>();
+        try {
+            File file = new File("output.dat");
+
+            if (file.exists()) {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                bookingList = (ArrayList<RoomBooking>) ois.readObject();
+                ois.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 // Check empty fields
         if (date.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || capacityText.isEmpty()) {
@@ -401,32 +505,85 @@ public class SearchGUI extends javax.swing.JFrame {
         for (Room room : rooms) {
             if (room.getCapacity() >= capacity && room.getStatus().equals("Active")) {
                 boolean isBooked = false;
-                for (Booking b : bookings) {
-                    if (b.getRoomId() == room.getRoomId()
-                            && b.getDate().equals(date)
-                            && b.getStatus().equals("Active")
-                            && !(b.getEndTime().compareTo(startTime) <= 0
-                            || b.getStartTime().compareTo(endTime) >= 0)) {
-                        isBooked = true;
-                        break;
+                
+                for (RoomBooking b : bookingList) {
+
+                    if (b.getRoomNo() == room.getRoomNumber()
+                        && b.getBookingDate().equals(java.time.LocalDate.parse(date))
+                        && b.getStatus().equals("Booked")) {
+
+                        if (!(b.getEndTime().toString().compareTo(startTime) <= 0 ||
+                              b.getStartTime().toString().compareTo(endTime) >= 0)) {
+
+                            isBooked = true;
+                            break;
+                        }
                     }
                 }
-                if (!isBooked) {
-                    model.addRow(new Object[]{
-                        room.getRoomId(),
-                        room.getRoomNumber(),
-                        room.getCapacity(),
-                        room.getStatus()
-                    });
-                }
+
+                //SHOW BOTH AVAILABLE + BOOKED
+                model.addRow(new Object[]{
+                    room.getRoomId(),
+                    room.getRoomNumber(),
+                    room.getCapacity(),
+                    isBooked ? "Booked" : "Available"
+                });
             }
         }
 
         viewTable.setModel(model);
 
         if (model.getRowCount() == 0) {
-            messageLbl.setText("No rooms available for the selected criteria.");
-            bookBtn.setEnabled(false);
+
+            int choice = JOptionPane.showConfirmDialog(this,
+                    "No rooms available.\nDo you want to create a new room?",
+                    "No Rooms Found",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (choice == JOptionPane.YES_OPTION) {
+
+                try {
+                    int capacityNew = Integer.parseInt(capacityTF.getText());
+
+                    //Generate new Room ID
+                    int newRoomId = rooms.size() + 1;
+
+                    //Generate new Room Number
+                    int newRoomNumber = 100 + newRoomId;
+
+                    //Create new room
+                    Room newRoom = new Room(newRoomId, newRoomNumber, capacityNew, "Active");
+
+                    rooms.add(newRoom);
+                    saveRoomsToFile();
+                    loadRoomsFromFile();
+                    searchBtn.doClick(); // refresh table
+
+                    JOptionPane.showMessageDialog(this,
+                            "New Room Created!\nRoom No: " + newRoomNumber);
+
+                    // Add to table immediately
+                    model.addRow(new Object[]{
+                        newRoom.getRoomId(),
+                        newRoom.getRoomNumber(),
+                        newRoom.getCapacity(),
+                        newRoom.getStatus()
+                    });
+
+                    viewTable.setModel(model);
+                    bookBtn.setEnabled(true);
+                    messageLbl.setText("1 room created and available.");
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Error creating room.");
+                }
+
+            } else {
+                messageLbl.setText("No rooms available for the selected criteria.");
+                bookBtn.setEnabled(false);
+            }
+
         } else {
             messageLbl.setText(model.getRowCount() + " room(s) found.");
             bookBtn.setEnabled(true);
@@ -464,6 +621,50 @@ public class SearchGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new SearchGUI().setVisible(true));
     }
+    
+    private void addPlaceholder(javax.swing.JTextField field, String placeholder) {
+
+    field.addFocusListener(new java.awt.event.FocusAdapter() {
+
+        public void focusGained(java.awt.event.FocusEvent evt) {
+            if (field.getText().equals(placeholder)) {
+                field.setText("");
+                field.setForeground(java.awt.Color.BLACK);
+            }
+        }
+
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            if (field.getText().isEmpty()) {
+                field.setText(placeholder);
+                field.setForeground(java.awt.Color.GRAY);
+            }
+        }
+    });
+}
+    private void saveRoomsToFile() {
+        try {
+            File file = new File("rooms.dat");
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+            oos.writeObject(rooms);
+            oos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadRoomsFromFile() {
+    try {
+        File file = new File("rooms.dat");
+
+        if (file.exists()) {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+            rooms = (ArrayList<Room>) ois.readObject();
+            ois.close();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookBtn;
