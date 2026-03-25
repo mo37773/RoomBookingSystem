@@ -1,6 +1,6 @@
 package roombookingsystem;
 
-public class Room {
+public class Room implements java.io.Serializable {
 
     private int roomId;
     private int roomNumber;
@@ -13,7 +13,11 @@ public class Room {
         this.capacity = capacity;
         this.status = status;
     }
-
+    
+    public Room(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+    
     public int getRoomId() {
         return roomId;
     }
